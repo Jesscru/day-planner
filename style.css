@@ -26,6 +26,11 @@ body {
     white-space: pre-wrap;
   }
   
+  .container {
+    text-align: center;
+    margin-left: 230px;
+  }
+
   .row {
     white-space: pre-wrap;
     height: 80px;
@@ -45,13 +50,14 @@ body {
     text-align: center;
     margin: 0;
     padding: 0px;
+    width: 80px;
   }
 
   .time-block{
     text-align: center;
     border-radius: 15px;
     padding: 0px;
-    width: 268px;
+    width: 700px;
     height: 88px;
     position: relative;
   }
@@ -59,7 +65,7 @@ body {
   .text-area {
     border: none;
     background-color: lightgrey;
-    width: 268px;
+    width: 700px;
     height: 80px;
     margin: 0;
     padding: 0px;
@@ -90,7 +96,7 @@ body {
     background-color: #06AED5;
     color: white;
     margin: 0;
-    width: 50px;
+    width: 80px;
     height: 88px;
     padding: 0px;
   }
