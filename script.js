@@ -30,24 +30,32 @@ $('#currentDay').text(moment().format("dddd, MMMM Do YYYY"));
 save.on('click', function(event){
     event.preventDefault();
 
-    var hours = $(this).val()  
+    var hours = $(this).val(); 
     var userEntry = $('#' + hours).val().trim();
 
     if (userEntry !== '') {
         localStorage.setItem(hours, userEntry);
+        var getIt = localStorage.getItem(hours);
+        $('#' + hours).html(getIt);
+        // console.log(getIt);
     } else {
         alert('Please enter an event before saving.');
     }
-
-    displayUserEntry(hours);
+    displayInput(hours);
 })
 
-// gets item from local storage and displays it in the appropriate box
-function displayUserEntry(hours){
-    var getIt = localStorage.getItem(hours);
-    $('#' + hours).html(getIt);
-    console.log(getIt);
+
+
+function displayInput(hours) {
+    if (localStorage !== null) {
+        for (var i = 9; i < 18; i++) {
+            var getHereToo = localStorage.getItem(hours);
+            $('#' + hours).html(getHereToo);
+            console.log(hours);
+        }
+    }
 }
+
 
 // clears local storage at midnight
 function newDay (){
@@ -63,3 +71,4 @@ clear.on('click', function(event){
     localStorage.clear();
 })
 
+newDay ();
