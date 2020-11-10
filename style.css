@@ -135,7 +135,6 @@ body {
     width: 400px;
     background-color: #c895cf;
     color: white;
-    border: none;
-  }
+    border: 0.5px solid rgb(104, 102, 102);;  }
 
   

@@ -34,20 +34,21 @@ save.on('click', function(event){
 
     if (userEntry !== null) {
         userValues.push(userEntry);
-        localStorage.setItem('storeThese', userValues);
-       
-        // displayUserInput();
+        localStorage.setItem(hours, userEntry);
+        var getIt = localStorage.getItem(hours);
+        $('#' + hours).text(getIt);
+        console.log(getIt);
     } 
-
-    // function displayUserInput(){
-    //     var printThisEntry = JSON.parse(localStorage.getItem('storeThese'));
-    //     for (var i = 0; i<printThisEntry.length; i++) {
-    //         textArea.text(printThisEntry[i].entry);
-    //     }
-    // }
-    console.log(userValues);
+    
+  
 })
 
+// clears local storage at midnight
+function newDay (){
+    if (parseInt(moment().hours()) === 24) {
+        localStorage.clear();
+    }
+}
 
 // clears data from local storage and thus, the page when the clear button is clicked
 clear.on('click', function(event){
@@ -56,26 +57,3 @@ clear.on('click', function(event){
     localStorage.clear();
 })
 
-
-
-// save.on('click', function(event){
-//   
-//     event.preventDefault();
-
-//     if (userEntry !== '') {
-       
-//         hourArray.push($(this).val());
-//         localStorage.setItem($(this).val(), userEntry);
-       
-
-//         for (var i = 0; i<hourArray.length; i++) {
-//           if (save.val() === $('name')) {
-//             var displayEvent = localStorage.getItem($(this).val);
-//             userEntry.text(displayEvent);
-//           }
-//         }
-
-//     } 
-    // else {
-    //     alert("Please enter the event you would like to schedule for this hour before saving.");
-    // }
