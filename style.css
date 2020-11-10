@@ -110,7 +110,7 @@ body {
   }
   
   .saveBtn {
-    border: 1px solid rgb(104, 102, 102);;
+    border: 0.5px solid rgb(104, 102, 102);;
     border-top-right-radius: 15px;
     border-bottom-right-radius: 15px;
     background-color: rgb(175, 216, 241);
