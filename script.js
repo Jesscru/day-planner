@@ -1,11 +1,9 @@
 var timeBlock = $('.time-block');
 var hour = $('.hour');
-var textAreaName = $('input').attr('name');
 var save = $('.saveBtn');
 var clear = $('.clearBtn');
 var textArea = $('.text-area');
-// var userEntry = $('input').value;
-var hourArray = [];
+var userValues = [];
 
 
 // displays the current day 
@@ -24,27 +22,30 @@ $('#currentDay').text(moment().format("dddd, MMMM Do YYYY"));
             $('#' + i).attr('class', 'future');
         }
     }
-    
-
-
-console.log(parseInt(moment().hours()));
 
 
 // when user clicks save buttons entered data in the text field will be saved to local storage 
 // if nothing is in the field and the user clicks save, they will be sent an alert to enter a value
 save.on('click', function(event){
     event.preventDefault();
-     var hours = $(this).val()  
-     var userEntry = $('#' + hours).val().trim();
-    console.log(userEntry)
-    
-    hourArray.push(userEntry);
+
+    var hours = $(this).val()  
+    var userEntry = $('#' + hours).val().trim();
 
     if (userEntry !== null) {
-        localStorage.setItem($(this).val(), userEntry);
-    } else {
-        alert("Please enter the event you would like to schedule for this hour before saving.");
-    }
+        userValues.push(userEntry);
+        localStorage.setItem('storeThese', userValues);
+       
+        // displayUserInput();
+    } 
+
+    // function displayUserInput(){
+    //     var printThisEntry = JSON.parse(localStorage.getItem('storeThese'));
+    //     for (var i = 0; i<printThisEntry.length; i++) {
+    //         textArea.text(printThisEntry[i].entry);
+    //     }
+    // }
+    console.log(userValues);
 })
 
 
