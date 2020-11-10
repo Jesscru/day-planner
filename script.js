@@ -3,7 +3,6 @@ var hour = $('.hour');
 var save = $('.saveBtn');
 var clear = $('.clearBtn');
 var textArea = $('.text-area');
-var userValues = [];
 
 
 // displays the current day 
@@ -14,17 +13,19 @@ $('#currentDay').text(moment().format("dddd, MMMM Do YYYY"));
     for (var i = 9; i < 18; i++) {
         if (parseInt(moment().hours()) > i) {
             $('#' + i).attr('class', 'past');
+            $('time-block').attr('class', 'past');
         }   // present is orange
          else if (parseInt(moment().hours()) === i) {
             $('#' + i).attr('class', 'present');
+            $('time-block').attr('class', 'past');
         }   // future is green 
          else {
             $('#' + i).attr('class', 'future');
+            $('time-block').attr('class', 'past');
         }
     }
 
-
-// when user clicks save buttons entered data in the text field will be saved to local storage 
+    // when user clicks save buttons entered data in the text field will be saved to local storage 
 // if nothing is in the field and the user clicks save, they will be sent an alert to enter a value
 save.on('click', function(event){
     event.preventDefault();
@@ -32,16 +33,21 @@ save.on('click', function(event){
     var hours = $(this).val()  
     var userEntry = $('#' + hours).val().trim();
 
-    if (userEntry !== null) {
-        userValues.push(userEntry);
+    if (userEntry !== '') {
         localStorage.setItem(hours, userEntry);
-        var getIt = localStorage.getItem(hours);
-        $('#' + hours).text(getIt);
-        console.log(getIt);
-    } 
-    
-  
+    } else {
+        alert('Please enter an event before saving.');
+    }
+
+    displayUserEntry(hours);
 })
+
+// gets item from local storage and displays it in the appropriate box
+function displayUserEntry(hours){
+    var getIt = localStorage.getItem(hours);
+    $('#' + hours).html(getIt);
+    console.log(getIt);
+}
 
 // clears local storage at midnight
 function newDay (){
