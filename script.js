@@ -3,6 +3,8 @@ var hour = $('.hour');
 var save = $('.saveBtn');
 var clear = $('.clearBtn');
 var textArea = $('.text-area');
+var inputData = '#' + $('button').val();
+var inputValues = [];
 
 
 // displays the current day 
@@ -32,29 +34,34 @@ save.on('click', function(event){
 
     var hours = $(this).val(); 
     var userEntry = $('#' + hours).val().trim();
+   
 
     if (userEntry !== '') {
-        localStorage.setItem(hours, userEntry);
-        var getIt = localStorage.getItem(hours);
-        $('#' + hours).html(getIt);
-        // console.log(getIt);
+        inputValues.push({'hour': hours, 'entry': userEntry});
+        localStorage.setItem('userEvents', JSON.stringify(inputValues));
+        ;
     } else {
         alert('Please enter an event before saving.');
     }
-    displayInput(hours);
+    
 })
 
+if (localStorage === undefined){
+    inputValues.clear();
+    inputData.html('');
+} else {
+    var getIt = localStorage.getItem('userEvents');
+    var inputValues = getIt ? JSON.parse(getIt) : [];
 
-
-function displayInput(hours) {
-    if (localStorage !== null) {
-        for (var i = 9; i < 18; i++) {
-            var getHereToo = localStorage.getItem(hours);
-            $('#' + hours).html(getHereToo);
-            console.log(hours);
+    for (var i = 0; i < inputValues.length; i++) {
+        for (var j = 9; j < 18; j++) {
+        if (parseInt(inputValues[i].hour) === j){
+            $('#'+ j).text(inputValues[i].entry);
+            }
+    console.log('#'+ j);  
         }
-    }
-}
+    } 
+}  
 
 
 // clears local storage at midnight
@@ -72,3 +79,5 @@ clear.on('click', function(event){
 })
 
 newDay ();
+
+
