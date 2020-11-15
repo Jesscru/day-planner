@@ -1,83 +1,83 @@
-var timeBlock = $('.time-block');
-var hour = $('.hour');
-var save = $('.saveBtn');
-var clear = $('.clearBtn');
-var textArea = $('.text-area');
-var inputValues = [];
+$(document).ready(function(){
+    var save = $('.saveBtn');
+    var clear = $('.clearBtn');
+    var inputValues = [];
 
+  
+    // displays the current day 
+    $('#currentDay').text(moment().format("dddd, MMMM Do YYYY"));
 
-// displays the current day 
-$('#currentDay').text(moment().format("dddd, MMMM Do YYYY"));
-
-// sets colors of the textareas based on the time 
-        // past is purple
-    for (var i = 9; i < 18; i++) {
-        if (parseInt(moment().hours()) > i) {
-            $('#' + i).attr('class', 'past');
-            $('time-block').attr('class', 'past');
-        }   // present is orange
-         else if (parseInt(moment().hours()) === i) {
-            $('#' + i).attr('class', 'present');
-            $('time-block').attr('class', 'past');
-        }   // future is green 
-         else {
-            $('#' + i).attr('class', 'future');
-            $('time-block').attr('class', 'past');
+    // sets colors of the textareas based on the time 
+            // past is purple
+        for (var i = 9; i < 18; i++) {
+            if (parseInt(moment().hours()) > i) {
+                $('#' + i).attr('class', 'past');
+                $('time-block').attr('class', 'past');
+            }   // present is orange
+            else if (parseInt(moment().hours()) === i) {
+                $('#' + i).attr('class', 'present');
+                $('time-block').attr('class', 'past');
+            }   // future is green 
+            else {
+                $('#' + i).attr('class', 'future');
+                $('time-block').attr('class', 'past');
+            }
         }
-    }
 
-    // when user clicks save buttons entered data in the text field will be saved to local storage 
-// if nothing is in the field and the user clicks save, they will be sent an alert to enter a value
-save.on('click', function(event){
-    event.preventDefault();
+        // when user clicks save buttons entered data in the text field will be saved to local storage 
+    // if nothing is in the field and the user clicks save, they will be sent an alert to enter a value
+    save.on('click', function(event){
+        event.preventDefault();
 
-    var hours = $(this).val(); 
-    var userEntry = $('#' + hours).val().trim();
-   
-
-    if (userEntry !== '') {
-        inputValues.push({'hour': hours, 'entry': userEntry});
-        localStorage.setItem('userEvents', JSON.stringify(inputValues));
-        ;
-    } else {
-        alert('Please enter an event before saving.');
-    }
+        var hours = $(this).val(); 
+        var userEntry = $('#' + hours).val().trim();
     
-})
 
-for (var i = 0; i < inputValues.length; i++) {
-    for (var j = 9; j < 18; j++) {
-
-    if (localStorage === undefined){
-        inputValues.clear();
-        $('#'+ j).html('');
-    } else {
-        var getIt = localStorage.getItem('userEvents');
-        var inputValues = getIt ? JSON.parse(getIt) : [];
-            if (parseInt(inputValues[i].hour) === j){
-            $('#'+ j).text(inputValues[i].entry);
-             }
+        if (userEntry !== undefined) {
+            inputValues.push({'hour': hours, 'entry': userEntry});
+            localStorage.setItem('userEvents', JSON.stringify(inputValues));
+    
+        } else {
+            alert('Please enter an event before saving.');
         }
-    } 
-}  
+        
+    })
+
+    
+
+        if (localStorage !== undefined){
+            var getIt = localStorage.getItem('userEvents');
+            var inputValues = getIt ? JSON.parse(getIt) : [];
+            
+            for (var j = 9; j < 18; j++) {
+                for (var i = 0; i < inputValues.length; i++) {
+
+                if (parseInt(inputValues[i].hour) === j){
+                    $('#'+ j).text('print this');
+                    } 
+                }
+            } 
+        } else {
+            inputValues.clear();
+            $('#'+ j).html('');
+        }
 
 
-
-
-// clears local storage at midnight
-function newDay (){
-    if (parseInt(moment().hours()) === 24) {
-        localStorage.clear();
+    // clears local storage at midnight
+    function newDay (){
+        if (parseInt(moment().hours()) === 24) {
+            localStorage.clear();
+        }
     }
-}
 
-// clears data from local storage and thus, the page when the clear button is clicked
-clear.on('click', function(event){
-    event.preventDefault();
+    // clears data from local storage and thus, the page when the clear button is clicked
+    clear.on('click', function(event){
+        event.preventDefault();
 
-    localStorage.clear();
+        localStorage.clear();
+    })
+
+    newDay ();
+
+  
 })
-
-newDay ();
-
-
